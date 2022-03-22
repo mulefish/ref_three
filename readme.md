@@ -27,3 +27,7 @@ npm run dev
 
 # Build for production in the dist/ directory
 npm run build
+
+
+
+npm install three-css2drender
