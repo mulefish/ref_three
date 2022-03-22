@@ -1,86 +1,51 @@
-import './style.css'
 import * as THREE from 'three'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import * as dat from 'dat.gui'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
-// Debug
-const gui = new dat.GUI()
-
-// Canvas
-const canvas = document.querySelector('canvas.webgl')
-
-// Scene
 const scene = new THREE.Scene()
+scene.add(new THREE.AxesHelper(5))
 
-// Objects
-const geometry = new THREE.TorusGeometry( .7, .2, 16, 100 );
+const camera = new THREE.PerspectiveCamera(
+    75,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1000
+)
+camera.position.z = 2
 
-// Materials
+// const renderer = new THREE.WebGLRenderer()
+// document.body.appendChild(renderer.domElement)
 
-const material = new THREE.MeshBasicMaterial()
-material.color = new THREE.Color(0xff0000)
+const canvas = document.getElementById("target");
+const renderer = new THREE.WebGLRenderer({ canvas: canvas });
+renderer.setSize(window.innerWidth, window.innerHeight)
 
-// Mesh
-const sphere = new THREE.Mesh(geometry,material)
-scene.add(sphere)
+const controls = new OrbitControls(camera, renderer.domElement)
 
-// Lights
 
-const pointLight = new THREE.PointLight(0xffffff, 0.1)
-pointLight.position.x = 2
-pointLight.position.y = 3
-pointLight.position.z = 4
-scene.add(pointLight)
 
-/**
- * Sizes
- */
-const sizes = {
-    width: window.innerWidth,
-    height: window.innerHeight
+const geometry = new THREE.BoxGeometry()
+const material = new THREE.MeshBasicMaterial({
+    color: 0x00ff00,
+    wireframe: true
+})
+
+const cube = new THREE.Mesh(geometry, material)
+scene.add(cube)
+
+window.addEventListener('resize', onWindowResize, false)
+function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight
+    camera.updateProjectionMatrix()
+    renderer.setSize(window.innerWidth, window.innerHeight)
+    render()
 }
 
-window.addEventListener('resize', () =>
-{
-    // Update sizes
-    sizes.width = window.innerWidth
-    sizes.height = window.innerHeight
+function animate() {
+    requestAnimationFrame(animate)
+    render()
+}
+function render() {
+    renderer.render(scene, camera)
+}
+animate()
 
-    // Update camera
-    camera.aspect = sizes.width / sizes.height
-    camera.updateProjectionMatrix()
-
-    // Update renderer
-    renderer.setSize(sizes.width, sizes.height)
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-})
-
-/**
- * Camera
- */
-// Base camera
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
-camera.position.x = 0
-camera.position.y = 0
-camera.position.z = 2
-scene.add(camera)
-
-// Controls
-// const controls = new OrbitControls(camera, canvas)
-// controls.enableDamping = true
-
-/**
- * Renderer
- */
-const renderer = new THREE.WebGLRenderer({
-    canvas: canvas
-})
-renderer.setSize(sizes.width, sizes.height)
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-
-/**
- * Animate
- */
-
-renderer.render(scene, camera)
-// tick()
