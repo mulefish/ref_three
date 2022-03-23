@@ -21,6 +21,18 @@ let user = "<table class='tbl' border='1'><th colspan='2'><div class='head'>user
 
 
 
+const boxWidth = 500;
+const boxHeight = 500;
+const boxDepth = 500;
+const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
+
+function hsl(h, s, l) {
+  return (new THREE.Color()).setHSL(h, s, l);
+}
+
+
+
+
 let distance = 6000
 
   const months = []
@@ -79,7 +91,8 @@ let distance = 6000
   var height = 500
   var camera, scene, renderer
   var controls
-
+  var rendererTrad; 
+  
   var objects = []
   init()
   animate()
@@ -91,6 +104,8 @@ let distance = 6000
     const y = 300
     const z = distance 
 
+
+    makeInstance(geometry, hsl(3,3,3),  300, 300, z);
 
     var t = `<table border='1'>`
     t += `<tr><td>x</td><td>${x}</td></tr>`
@@ -106,6 +121,7 @@ let distance = 6000
 
     var o2 = new CSS3DObject(bunny)
     scene.add(o2)
+    scene.background = new THREE.Color('white');
 
 
     o2.position.x = 300// 500 + (Math.floor(Math.random() * 1000))
@@ -133,6 +149,23 @@ let distance = 6000
     o2.position.y = -200// + (Math.floor(Math.random() * 1000))
     o2.position.z = w.distance
   }
+
+
+  function makeInstance(geometry, color, x, y, z) {
+    const material = new THREE.MeshPhongMaterial({
+      color,
+      opacity: 0.5,
+      transparent: true,
+    });
+
+    const cube = new THREE.Mesh(geometry, material);
+    scene.add(cube);
+
+    cube.position.set(x, y, z);
+
+    return cube;
+  }
+
 
   function init () {
     camera = new THREE.PerspectiveCamera(40, window.innerWidth / height, 1, 10000)
@@ -162,10 +195,26 @@ let distance = 6000
     addTable( months[9].distance)
     addTable( months[15].distance)
 
+    {
+      const d = 0.8;
+      makeInstance(geometry, hsl(0 / 8, 1, .5), 300, 300, 2250);
+
+      // makeInstance(geometry, hsl(0 / 8, 1, .5), -d, -d, 400);
+      // makeInstance(geometry, hsl(1 / 8, 1, .5),  d, -d, 400;
+      // makeInstance(geometry, hsl(2 / 8, 1, .5), -d,  d, -d);
+      // makeInstance(geometry, hsl(3 / 8, 1, .5),  d,  d, -d);
+      // makeInstance(geometry, hsl(4 / 8, 1, .5), -d, -d,  d);
+      // makeInstance(geometry, hsl(5 / 8, 1, .5),  d, -d,  d);
+      // makeInstance(geometry, hsl(6 / 8, 1, .5), -d,  d,  d);
+      // makeInstance(geometry, hsl(7 / 8, 1, .5),  d,  d,  d);
+    }
     renderer = new CSS3DRenderer()
+    rendererTrad = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, height)
+    rendererTrad.setSize(window.innerWidth, height)
     renderer.domElement.style.position = 'absolute'
     document.getElementById('container').appendChild(renderer.domElement)
+    document.getElementById('container').appendChild(rendererTrad.domElement)
     // canvas.appendChild(renderer.domElement)
 
     // controls = new TrackballControls(camera, renderer.domElement)
@@ -197,4 +246,5 @@ let distance = 6000
 
   function render () {
     renderer.render(scene, camera)
+    rendererTrad.render(scene, camera)
   }
