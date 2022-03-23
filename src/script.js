@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls'
+//import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls'
 
 // import { CSS2DRenderer, CSS2DObject } from "three-css2drender";
 import {CSS3DRenderer, CSS3DSprite, CSS3DObject} from 'three-css3d';
@@ -24,11 +24,20 @@ let user = "<table class='tbl' border='1'><th colspan='2'><div class='head'>user
 let distance = 6000
 
   const months = []
-  function When (id, display, distance) {
-    this.id = id
-    this.display = display
-    this.distance = distance
+  // function When (id, display, distance) {
+  //   this.id = id
+  //   this.display = display
+  //   this.distance = distance
+  // }
+
+  class When{ 
+    constructor(id, display, distance) {
+      this.id = id
+      this.display = display
+      this.distance = distance
+    }
   }
+
 
   const timeline = () => {
   // +6000 'units' is what Z is set to in the three.js code
@@ -75,46 +84,35 @@ let distance = 6000
   init()
   animate()
 
-  function createTable () {
-    let html = "<table class='main'>"
-    html += '<tr>'
-    html += '<td valign=top>' + sessions + '</td>'
-
-    html += '<td valign=top>' + campaigns + '</td>'
-    html += '<td valign=top>' + click_names + '</td>'
-    html += '<td valign=top rowspan=2>' + demographics + '</td>'
-
-    html += '</tr><tr>'
-    html += '<td valign=top rowspan=2>' + segment + '</td>'
-
-    html += '<td valign=top>' + click_sum + '</td>'
-    html += '<td valign=top>' + registration + '</td>'
-    html += '</tr><tr>'
-
-    html += '<td valign=top>' + clicks + '</td>'
-    html += '<td valign=top>' + user + '</td>'
-    html += '<td valign=top>' + campaign_impact + '</td>'
-
-    html += '</tr></html>'
-
-    return html
-  }
-
-  function addTable (table, distance) {
+  function addTable ( distance) {
     var bunny = document.createElement('div')
+
+    const x = 300
+    const y = 300
+    const z = distance 
+
+
+    var t = `<table border='1'>`
+    t += `<tr><td>x</td><td>${x}</td></tr>`
+    t += `<tr><td>y</td><td>${y}</td></tr>`
+    t += `<tr><td>z</td><td>${z}</td></tr>`
+
 
     var details = document.createElement('div')
     details.className = 'details'
 
-    details.innerHTML = table
+    details.innerHTML = t
     bunny.appendChild(details)
 
     var o2 = new CSS3DObject(bunny)
     scene.add(o2)
 
+
     o2.position.x = 300// 500 + (Math.floor(Math.random() * 1000))
     o2.position.y = 300// -500 + (Math.floor(Math.random() * 1000))
     o2.position.z = distance// -500 + (Math.floor(Math.random() * 4000))
+
+
   }
 
   function addWhen (index) {
@@ -150,10 +148,19 @@ let distance = 6000
       addWhen(i)
     }
 
-    let html = createTable()
-    addTable(html, months[0].distance)
-    addTable(html, months[9].distance)
-    addTable(html, months[15].distance)
+    // let html = createTable()
+    addTable( months[0].distance)
+    addTable( -10)
+
+ 
+
+    addTable( 101)
+    addTable( 1001)
+
+
+
+    addTable( months[9].distance)
+    addTable( months[15].distance)
 
     renderer = new CSS3DRenderer()
     renderer.setSize(window.innerWidth, height)
@@ -161,8 +168,8 @@ let distance = 6000
     document.getElementById('container').appendChild(renderer.domElement)
     // canvas.appendChild(renderer.domElement)
 
-    controls = new TrackballControls(camera, renderer.domElement)
-    // controls = new OrbitControls(camera, renderer.domElement)
+    // controls = new TrackballControls(camera, renderer.domElement)
+    controls = new OrbitControls(camera, renderer.domElement)
 
     controls.rotateSpeed = 0.5
     controls.minDistance = 500
@@ -186,10 +193,8 @@ let distance = 6000
   function animate () {
     requestAnimationFrame(animate)
     controls.update()
-    console.log("animate")
   }
 
   function render () {
     renderer.render(scene, camera)
-    console.log("redner")
   }
