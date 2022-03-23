@@ -21,15 +21,36 @@ let user = "<table class='tbl' border='1'><th colspan='2'><div class='head'>user
 
 
 
-const boxWidth = 500;
-const boxHeight = 500;
-const boxDepth = 500;
-const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
 
-function hsl(h, s, l) {
-  return (new THREE.Color()).setHSL(h, s, l);
+function addLight(...pos) {
+  const color = 0xFFFFFF;
+  const intensity = 1;
+  const light = new THREE.DirectionalLight(color, intensity);
+  light.position.set(...pos);
+  scene.add(light);
 }
 
+
+const boxWidth = 50;
+const boxHeight = 50;
+const boxDepth = 50;
+const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
+
+// function hsl(h, s, l) {
+//   return (new THREE.Color()).setHSL(h, s, l);
+// }
+
+// rgb(
+function hsl(h,s,l) { 
+  // NOTE to the future: use hsl? or rgb?
+  const color3 = new THREE.Color("rgb(255, 0, 0)");
+  return color3
+}
+
+
+// function hsl(h, s, l) {
+//   return (new THREE.Color()).setHSL(h, s, l);
+// }
 
 
 
@@ -104,9 +125,13 @@ let distance = 6000
     const y = 300
     const z = distance 
 
+    const hue = Math.random()
+    const saturation = 1; // Math.random()
+    const lightness = Math.random()
+    makeInstance(geometry, hsl(hue, saturation, lightness  ),  300, 300, z - 50 );
+//    makeInstance(geometry, hsl(0, 0, 1  ),  300, 300, z - 50 );
 
-    makeInstance(geometry, hsl(3,3,3),  300, 300, z);
-
+console.log( hue, saturation, lightness )
     var t = `<table border='1'>`
     t += `<tr><td>x</td><td>${x}</td></tr>`
     t += `<tr><td>y</td><td>${y}</td></tr>`
@@ -122,6 +147,10 @@ let distance = 6000
     var o2 = new CSS3DObject(bunny)
     scene.add(o2)
     scene.background = new THREE.Color('white');
+
+
+    addLight(-1, 2, 4);
+    addLight( 1, -1, -2);
 
 
     o2.position.x = 300// 500 + (Math.floor(Math.random() * 1000))
@@ -197,7 +226,7 @@ let distance = 6000
 
     {
       const d = 0.8;
-      makeInstance(geometry, hsl(0 / 8, 1, .5), 300, 300, 2250);
+      // makeInstance(geometry, hsl(0 / 8, 1, .5), 300, 300, 2250);
 
       // makeInstance(geometry, hsl(0 / 8, 1, .5), -d, -d, 400);
       // makeInstance(geometry, hsl(1 / 8, 1, .5),  d, -d, 400;
