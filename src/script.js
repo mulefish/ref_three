@@ -156,6 +156,7 @@ console.log( hue, saturation, lightness )
     o2.position.x = 300// 500 + (Math.floor(Math.random() * 1000))
     o2.position.y = 300// -500 + (Math.floor(Math.random() * 1000))
     o2.position.z = distance// -500 + (Math.floor(Math.random() * 4000))
+    o2.rotateX = 10.2
 
 
   }
