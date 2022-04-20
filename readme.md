@@ -1,7 +1,3 @@
-# Three.js Starter
-# https://github.com/designcourse/threejs-webpack-starter
-Courtesy of Bruno Simon of https://threejs-journey.xyz/
-
 ## Setup
 Download [Node.js](https://nodejs.org/en/download/).
 Run this followed commands:
@@ -31,3 +27,10 @@ npm run build
 
 
 npm install three-css2drender
+
+
+
+# debugging 
+https://stackoverflow.com/questions/36783068/cannot-connect-to-the-target-connect-econnrefused-127-0-0-19222
+
+ In a terminal, execute /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222

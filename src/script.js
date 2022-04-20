@@ -162,7 +162,7 @@ console.log( hue, saturation, lightness )
 
   function addWhen (index) {
     let w = months[index]
-    // console.log('addWhen: ' + index + 'w ' + w)
+    console.log('addWhen: ' + index + 'w ' + w)
 
     var thing = document.createElement('div')
     var details = document.createElement('div')
@@ -209,6 +209,7 @@ console.log( hue, saturation, lightness )
       // months[i].display = months[i].distance + ' | ' + months[i].id
       addWhen(i)
     }
+    console.log("%c addWhen was called. ", "color: red; font-size: 24px;")
 
     // let html = createTable()
     addTable( months[0].distance)
