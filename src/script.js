@@ -129,9 +129,12 @@ let distance = 6000
     const saturation = 1; // Math.random()
     const lightness = Math.random()
     makeInstance(geometry, hsl(hue, saturation, lightness  ),  300, 300, z - 50 );
+
+
+
+
 //    makeInstance(geometry, hsl(0, 0, 1  ),  300, 300, z - 50 );
 
-console.log( hue, saturation, lightness )
     var t = `<table border='1'>`
     t += `<tr><td>x</td><td>${x}</td></tr>`
     t += `<tr><td>y</td><td>${y}</td></tr>`
@@ -159,11 +162,47 @@ console.log( hue, saturation, lightness )
     o2.rotateX = 10.2
 
 
+
+
+
   }
+
+  function drawOneLine() { 
+    try {
+      let z = 0 
+      const points = [];
+      for ( let i = 0 ; i < 10; i++ ) { 
+        let x = ( Math.random() * 1000 ) - 500;
+        let y = ( Math.random() * 1000 ) - 500;
+        z += 500;
+        points.push( new THREE.Vector3( x, y , z  ) );
+      }
+      const material = new THREE.LineBasicMaterial({
+        color: 0x0000ff
+      });
+      const geometry = new THREE.BufferGeometry().setFromPoints( points );
+      // const line = new THREE.Line( geometry, material );
+      // scene.add( line );
+
+      var shape = new THREE.Shape(points);
+      shape.autoClose = true; // the shape will be closed automatically, thus we don't need to put the fifth point
+      //var geometry = shape.createPointsGeometry();
+      var line = new THREE.Line(geometry, new THREE.LineBasicMaterial({color: "orange"}));
+      scene.add(line);
+
+
+
+
+    } catch ( ohno) {
+      alert( ohno)
+    }
+  } 
+
+
+
 
   function addWhen (index) {
     let w = months[index]
-    console.log('addWhen: ' + index + 'w ' + w)
 
     var thing = document.createElement('div')
     var details = document.createElement('div')
@@ -210,7 +249,7 @@ console.log( hue, saturation, lightness )
       // months[i].display = months[i].distance + ' | ' + months[i].id
       addWhen(i)
     }
-    console.log("%c addWhen was called. ", "color: red; font-size: 24px;")
+
 
     // let html = createTable()
     addTable( months[0].distance)
@@ -225,20 +264,9 @@ console.log( hue, saturation, lightness )
 
     addTable( months[9].distance)
     addTable( months[15].distance)
+    console.log("%c HERE WE GO! " , "color: red; font-size: 30px;")
+    drawOneLine() 
 
-    {
-      const d = 0.8;
-      // makeInstance(geometry, hsl(0 / 8, 1, .5), 300, 300, 2250);
-
-      // makeInstance(geometry, hsl(0 / 8, 1, .5), -d, -d, 400);
-      // makeInstance(geometry, hsl(1 / 8, 1, .5),  d, -d, 400;
-      // makeInstance(geometry, hsl(2 / 8, 1, .5), -d,  d, -d);
-      // makeInstance(geometry, hsl(3 / 8, 1, .5),  d,  d, -d);
-      // makeInstance(geometry, hsl(4 / 8, 1, .5), -d, -d,  d);
-      // makeInstance(geometry, hsl(5 / 8, 1, .5),  d, -d,  d);
-      // makeInstance(geometry, hsl(6 / 8, 1, .5), -d,  d,  d);
-      // makeInstance(geometry, hsl(7 / 8, 1, .5),  d,  d,  d);
-    }
     renderer = new CSS3DRenderer()
     rendererTrad = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, height)
