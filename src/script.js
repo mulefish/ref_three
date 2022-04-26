@@ -210,14 +210,14 @@ let distance = 6000
     var thing = document.createElement('div')
     var details = document.createElement('div')
     details.className = 'timeline'
-    details.innerHTML = w.display
+    details.innerHTML = w.display + '<br>x-200<br>y-200<br>z' + w.distance
     thing.appendChild(details)
 
     // var o2 = new THREE.CSS3DObject(thing)
     var o2 = new CSS3DObject(thing)
     scene.add(o2)
 
-    o2.position.x = -200// + (Math.floor(Math.random() * 1000))
+    o2.position.x = -800// + (Math.floor(Math.random() * 1000))
     o2.position.y = -200// + (Math.floor(Math.random() * 1000))
     o2.position.z = w.distance
   }
@@ -238,11 +238,56 @@ let distance = 6000
     return cube;
   }
 
+  function triangles() { 
+
+
+  const geometry = new THREE.SphereGeometry( 30, 16, 16 );
+  const material = new THREE.MeshBasicMaterial( { color: 0xff6633 } );
+
+    let len = 10000 / 15 
+    let myx = -5000
+    let step = 0
+    for ( let x = 0; x < 10; x++ ) {
+      let myy = -5000
+      myx += x * len
+      for ( let y = 0; y < 10; y++ ) {
+        myy += y * len
+
+        const sphere = new THREE.Mesh( geometry, material );
+
+
+        sphere.position.x = -1000 + (2000 * Math.random() ) // horizontal
+        sphere.position.y = -200  // vertical
+        sphere.position.z = step // depth
+        step += 100
+        
+        scene.add( sphere );
+        
+
+
+
+
+      }
+
+
+
+    } 
+
+
+
+
+
+  }
+
+
 
   function init () {
     camera = new THREE.PerspectiveCamera(40, window.innerWidth / height, 1, 10000)
     camera.position.z = 10000
     scene = new THREE.Scene()
+
+    triangles()
+
 
     // months[22].id = '0'
     // months[22].display = 'ZOOM'
