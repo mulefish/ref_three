@@ -168,7 +168,10 @@ let distance = 6000
   }
 
   function drawOneLine() { 
-    try {
+
+    console.log(" %c Get Goat!","color: red; font-size: 20px;")
+
+    try { 
       let z = 0 
       const points = [];
       for ( let i = 0 ; i < 10; i++ ) { 
@@ -264,7 +267,6 @@ let distance = 6000
 
     addTable( months[9].distance)
     addTable( months[15].distance)
-    console.log("%c HERE WE GO! " , "color: red; font-size: 30px;")
     drawOneLine() 
 
     renderer = new CSS3DRenderer()
