@@ -31,7 +31,7 @@ function main() {
     scene.add(axes);
 
     const X = makeTextSprite( `X`, { fontsize: 44, textColor: {r:0, g:0, b:0, a:1.0}} );
-	X.position.set(10,0,0);
+	X.position.set(55,0,0);
     scene.add(X);
     const Y = makeTextSprite( `Y`, { fontsize: 44, textColor: {r:0, g:0, b:0, a:1.0}} );
 	Y.position.set(0,10,0);
@@ -57,9 +57,11 @@ function main() {
     const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
 
     function makeInstance(geometry, color, x, y, z) {
+        // finch 
+        const clr = "rgba(0,0,0,1)"
         const material = new THREE.MeshPhongMaterial({
-            color,
-            opacity: 0.5,
+            clr,
+            opacity: 1.0,
             transparent: true,
         });
 
@@ -89,6 +91,20 @@ function main() {
         makeInstance(geometry, hsl(5 / 8, 1, .5), d, -d, d);
         makeInstance(geometry, hsl(6 / 8, 1, .5), -d, d, d);
         makeInstance(geometry, hsl(7 / 8, 1, .5), d, d, d);
+        makeInstance(geometry, hsl(7 / 8, 1, .5), 51, 0, 0);
+
+        for ( let j = 0; j < 200; j++ ) {
+
+            const xx = ( Math.random() * 150 ) - 75 
+            const yy = ( Math.random() * 150 ) - 75 
+            const zz = ( Math.random() * 150 ) - 75 
+
+            makeInstance(geometry, hsl(7 / 8, 1, .5), xx, yy, zz );
+
+
+        }
+
+
     }
 
 
