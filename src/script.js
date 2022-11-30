@@ -41,6 +41,7 @@ function main() {
     scene.add(Z);
 
     function addLight(...pos) {
+        console.log( pos )
         const color = 0xFFFFFF;
         const intensity = 1;
         const light = new THREE.DirectionalLight(color, intensity);
@@ -164,3 +165,8 @@ function makeTextSprite(message, parameters) {
 }
 
 main();
+
+function helloworld(param) { 
+    alert(param)
+}
+self["helloworld"] = helloworld; 
