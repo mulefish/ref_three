@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>File Change Viewer</title>
+    <script src="products.js"></script>
     <style>
-        .timeline {
+        /* .timeline {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 24px;
 	font-style: normal;
@@ -99,16 +100,223 @@
           right: 0px;
           font-size: 12px;
           color: rgba(127,255,255,0.75);
-        }
+        } */
     </style>
 </head>
 <body>
     <ul>
-      <button onClick="helloworld('helloworld')">See helloworld for reaching the func!</button>"
+      <button onClick="helloworld('helloworld')">See helloworld for reaching the func!</button>
+      <table border="1">
+        <tr>
+          <th>
+            t
+          </th>
+          <th>
+            c
+          </th>
+          <th>
+            cr
+          </th>
+          <th>
+            riv
+          </th>
+          <th>
+            i
+          </th>
+
+        </tr>
+        <tr>
+          <td id="t1">
+          </td>
+          <td id="c1">
+          </td>
+          <td id="cr1">
+          </td>
+          <td id="riv1">
+          </td>
+          <td id="i1">
+          </td>
+        </tr>
+        <tr>
+          <td id="t2">
+          </td>
+          <td id="c2">
+          </td>
+          <td id="cr2">
+          </td>
+          <td id="riv2">
+          </td>
+          <td id="i2">
+          </td>
+        </tr>
+        <tr>
+          <td id="t3">
+          </td>
+          <td id="c3">
+          </td>
+          <td id="cr3">
+          </td>
+          <td id="riv3">
+          </td>
+          <td id="i3">
+          </td>
+        </tr>
+
+      </table>
+
     </ul></li>
     <hr/>
-    <canvas id="target"></canvas>
-    <div id="container"></div>
+    <table border="1">
+      <tr>
+        <td valign="top">
+          <canvas id="target"></canvas>
+
+        </td>
+        <td valign="top" >
+          <div id="dropdown">
+
+          </div>
+          <hr/>
+          <div id="chooser">
+            chooser
+
+          </div>
+        </td>
+
+      </tr>
+
+    </table>
+    <!-- <div id="container"></div> -->
     <br/>
+    <script>
+      // alert( Object.keys(tokens).length )
+
+      function createDropdown() {
+			let dd = `<select size='30' onChange='makeChoice()' id='chooser'>`
+			let keys = Object.keys(tokens)
+			keys = keys.sort()
+			let j = 0
+			keys.forEach((k, i) => {
+				const obj = tokens[k]
+				if (obj.count > 3) {
+					j++
+					dd += `<option value='${k}'>${j} | ${obj.count}| ${obj.cross} | ${k}</option>`
+				}
+			})
+			dd += "</select>"
+			document.getElementById("dropdown").innerHTML = dd;
+		}
+
+		createDropdown()
+
+
+
+    let dimentions = []
+		let current = 0
+		function makeChoice() {
+			const x = document.getElementById("chooser")
+			const text = x.options[x.selectedIndex].value;
+			const obj = tokens[text]
+			dimentions[current] = text
+			current++
+			if (current > 2) {
+				current = 0
+			}
+			dimentions.forEach((d, i) => {
+				const obj = tokens[d]
+				document.getElementById("t" + (i + 1)).innerHTML = d
+				document.getElementById("c" + (i + 1)).innerHTML = obj.count
+				document.getElementById("cr" + (i + 1)).innerHTML = obj.cross
+				document.getElementById("riv" + (i + 1)).innerHTML = obj.riv
+				document.getElementById("i" + (i + 1)).innerHTML = obj.i
+
+
+
+			})
+			sort()
+		}
+
+
+		function cosine_similarity(A, B) {
+			// Q: What?! Adding into the vectors?! Why? 
+			// A: To prevent any divide-by-zero issues.
+			if (A.length !== B.length) {
+				throw new Error('Vectors have different lengths/magnitudes! Bad times')
+			}
+			// A[0] += 0.000001
+			// B[0] += 0.000001
+			function dotp(x, y) {
+				function dotp_sum(a, b) {
+					return a + b;
+				}
+				function dotp_times(a, i) {
+					return x[i] * y[i];
+				}
+				return x.map(dotp_times).reduce(dotp_sum, 0);
+			}
+			const similarity = dotp(A, B) / (Math.sqrt(dotp(A, A)) * Math.sqrt(dotp(B, B)));
+			return similarity;
+		}
+
+
+		function sort() {
+			const t = dimentions[0]
+			const riv = tokens[t].riv
+			let most1 = undefined
+			let most2 = undefined
+			let tmp_most_1 = -1000
+			let tmp_most_2 = -1000
+			let tmp_most_3 = -1000
+			for (let k in products) {
+				// A: get the vector similarity ( 1 or -1 )
+				// B: scale A to 1
+				// C: B's step will have some negatives! 
+				//	1.	Add height to everything, 
+				//	2.	cut that in half, 
+				// 	3.	and subtract that from the viewport height
+				// 	4.	set each product's y
+
+				let p = products[k]
+				const delta = cosine_similarity(riv, p.riv)
+				if (delta > tmp_most_1) {
+					tmp_most_1 = delta
+					most1 = k
+				}
+				const y = h * delta / 1
+				p.delta = delta
+				const modified = h - ((y + h) / 2)
+				p.y = modified
+				// p.y = h - y 
+				//
+				if (dimentions[1] !== undefined) {
+					const t2 = dimentions[1]
+					const delta2 = cosine_similarity(tokens[t2].riv, p.riv)
+					const x = w * delta2 / 1
+					// console.log(  delta + "  A: " + riv )
+					// console.log( delta2 + "  B: " + tokens[t2].riv)
+					const modified2 = w - ((x + w) / 2)
+					p.x = modified2
+					// console.log( p.x )
+					p.delta2 = delta2
+
+
+					if (delta2 > tmp_most_2) {
+						tmp_most_2 = delta2
+						most2 = k
+					}
+
+				}
+
+			}
+			mosts = {}
+			mosts[most1] = products[most1].affinity// `rgba(0, 0, 255, 1)`;
+			if (most2 !== undefined) {
+				mosts[most2] =products[most2].affinity // `rgba(255, 0, 0, 1)`;
+			}
+		}
+
+
+    </script>
+
 </body>
 </html> 

@@ -6,16 +6,46 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
 const canvas = document.getElementById("target");
 const HEIGHT = window.innerHeight * 0.8;
+const WIDTH = window.innerWidth * 0.8
+const cubes = [] 
+let renderer = undefined; 
+let camera = undefined; 
+let renderRequested = false;
+let scene = undefined;
+function render() {
+    renderRequested = undefined;
+
+    if (resizeRendererToDisplaySize(renderer)) {
+        const canvas = renderer.domElement;
+        camera.aspect = canvas.clientWidth / canvas.clientHeight;
+        camera.updateProjectionMatrix();
+    }
+
+    renderer.render(scene, camera);
+}
+
+
+function resizeRendererToDisplaySize(renderer) {
+    const canvas = renderer.domElement;
+    const width = WIDTH // canvas.clientWidth;
+    const height = canvas.clientHeight;
+    const needResize = canvas.width !== width || canvas.height !== height;
+    if (needResize) {
+        renderer.setSize(width, height, false);
+    }
+    return needResize;
+}
+
 function main() {
 
-    const renderer = new THREE.WebGLRenderer({ canvas });
-    renderer.setSize(window.innerWidth, HEIGHT)
+    renderer = new THREE.WebGLRenderer({ canvas });
+    renderer.setSize(WIDTH, HEIGHT)
 
     const fov = 75;
     const aspect = 2;  // the canvas default
     const near = 0.1;
     const far = 1000;
-    const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+    camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
     camera.position.z = 100;
 
     const axes = new THREE.AxisHelper(50);
@@ -25,7 +55,7 @@ function main() {
     controls.target.set(10,10,0);
     controls.update();
 
-    const scene = new THREE.Scene();
+    scene = new THREE.Scene();
     scene.background = new THREE.Color('white');
 
     scene.add(axes);
@@ -55,13 +85,12 @@ function main() {
     const boxHeight = 1;
     const boxDepth = 1;
     const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
-
     function makeInstance(geometry, color, x, y, z) {
         // finch 
         const clr = "rgba(0,0,0,1)"
         const material = new THREE.MeshPhongMaterial({
             clr,
-            opacity: 1.0,
+            opacity: 0.5,
             transparent: true,
         });
 
@@ -69,6 +98,7 @@ function main() {
 
         scene.add(cube);
 
+        cubes.push(cube)
 
 
 
@@ -82,56 +112,54 @@ function main() {
     }
 
     {
-        const d = 0.8;
-        makeInstance(geometry, hsl(0 / 8, 1, .5), -d, -d, -d);
-        makeInstance(geometry, hsl(1 / 8, 1, .5), d, -d, -d);
-        makeInstance(geometry, hsl(2 / 8, 1, .5), -d, d, -d);
-        makeInstance(geometry, hsl(3 / 8, 1, .5), d, d, -d);
-        makeInstance(geometry, hsl(4 / 8, 1, .5), -d, -d, d);
-        makeInstance(geometry, hsl(5 / 8, 1, .5), d, -d, d);
-        makeInstance(geometry, hsl(6 / 8, 1, .5), -d, d, d);
-        makeInstance(geometry, hsl(7 / 8, 1, .5), d, d, d);
-        makeInstance(geometry, hsl(7 / 8, 1, .5), 51, 0, 0);
-
+        // const d = 0.8;
+        // makeInstance(geometry, hsl(0 / 8, 1, .5), -d, -d, -d);
+        // makeInstance(geometry, hsl(1 / 8, 1, .5), d, -d, -d);
+        // makeInstance(geometry, hsl(2 / 8, 1, .5), -d, d, -d);
+        // makeInstance(geometry, hsl(3 / 8, 1, .5), d, d, -d);
+        // makeInstance(geometry, hsl(4 / 8, 1, .5), -d, -d, d);
+        // makeInstance(geometry, hsl(5 / 8, 1, .5), d, -d, d);
+        // makeInstance(geometry, hsl(6 / 8, 1, .5), -d, d, d);
+        // makeInstance(geometry, hsl(7 / 8, 1, .5), d, d, d);
+        // makeInstance(geometry, hsl(7 / 8, 1, .5), 51, 0, 0);
+        // let xx = -75
         for ( let j = 0; j < 200; j++ ) {
 
-            const xx = ( Math.random() * 150 ) - 75 
-            const yy = ( Math.random() * 150 ) - 75 
-            const zz = ( Math.random() * 150 ) - 75 
-
+            // const xx = ( Math.random() * 150 ) - 75 
+            // const yy = ( Math.random() * 150 ) - 75 
+            // const zz = ( Math.random() * 150 ) - 75 
+            const xx = 0 
+            const yy = 0
+            const zz = 0 
             makeInstance(geometry, hsl(7 / 8, 1, .5), xx, yy, zz );
-
-
-        }
-
-
+      }
     }
 
 
-    function resizeRendererToDisplaySize(renderer) {
-        const canvas = renderer.domElement;
-        const width = canvas.clientWidth;
-        const height = canvas.clientHeight;
-        const needResize = canvas.width !== width || canvas.height !== height;
-        if (needResize) {
-            renderer.setSize(width, height, false);
-        }
-        return needResize;
-    }
+    // function resizeRendererToDisplaySize(renderer) {
+    //     const canvas = renderer.domElement;
+    //     const width = WIDTH // canvas.clientWidth;
+    //     const height = canvas.clientHeight;
+    //     const needResize = canvas.width !== width || canvas.height !== height;
+    //     if (needResize) {
+    //         renderer.setSize(width, height, false);
+    //     }
+    //     return needResize;
+    // }
 
-    let renderRequested = false;
+    // let renderRequested = false;
 
-    function render() {
-        renderRequested = undefined;
+    // function render() {
+    //     renderRequested = undefined;
 
-        if (resizeRendererToDisplaySize(renderer)) {
-            const canvas = renderer.domElement;
-            camera.aspect = canvas.clientWidth / canvas.clientHeight;
-            camera.updateProjectionMatrix();
-        }
+    //     if (resizeRendererToDisplaySize(renderer)) {
+    //         const canvas = renderer.domElement;
+    //         camera.aspect = canvas.clientWidth / canvas.clientHeight;
+    //         camera.updateProjectionMatrix();
+    //     }
 
-        renderer.render(scene, camera);
-    }
+    //     renderer.render(scene, camera);
+    // }
     render();
 
     function requestRenderIfNotRequested() {
@@ -183,6 +211,13 @@ function makeTextSprite(message, parameters) {
 main();
 
 function helloworld(param) { 
-    alert(param)
+//    alert(param)
+    try { 
+    cubes[0].position.set(0, 10, 10);
+        console.log("DO IT!")
+        render()
+} catch ( boom ) { 
+        alert( boom )
+    }
 }
 self["helloworld"] = helloworld; 
