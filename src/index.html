@@ -105,11 +105,14 @@
 </head>
 <body>
     <ul>
-      <button onClick="helloworld('helloworld')">See helloworld for reaching the func!</button>
+      <!-- <button onClick="helloworld('helloworld')">See helloworld for reaching the func!</button> -->
       <table border="1">
         <tr>
           <th>
-            t
+            i
+          </th>
+          <th>
+            token
           </th>
           <th>
             c
@@ -126,6 +129,10 @@
 
         </tr>
         <tr>
+          <td id="current1">
+            
+          </td>
+
           <td id="t1">
           </td>
           <td id="c1">
@@ -136,8 +143,15 @@
           </td>
           <td id="i1">
           </td>
+          <td>
+            <button onClick='sortOn("x", "t1")'>sort X</button>'
+          </td>
         </tr>
         <tr>
+          <td id="current2">
+            
+          </td>
+
           <td id="t2">
           </td>
           <td id="c2">
@@ -148,8 +162,15 @@
           </td>
           <td id="i2">
           </td>
+          <td>
+            <button onClick='sortOn("y", "t2")'>sort Y</button>'
+          </td>
         </tr>
         <tr>
+          <td id="current3">
+            
+          </td>
+
           <td id="t3">
           </td>
           <td id="c3">
@@ -159,6 +180,9 @@
           <td id="riv3">
           </td>
           <td id="i3">
+          </td>
+          <td>
+            <button onClick='sortOn("z", "t3")'>sort Z</button>'
           </td>
         </tr>
 
@@ -177,10 +201,9 @@
 
           </div>
           <hr/>
-          <div id="chooser">
-            chooser
+          <!-- <div id="chooser">
 
-          </div>
+          </div> -->
         </td>
 
       </tr>
@@ -224,6 +247,7 @@
 			}
 			dimentions.forEach((d, i) => {
 				const obj = tokens[d]
+				document.getElementById("current" + (i + 1)).innerHTML = current
 				document.getElementById("t" + (i + 1)).innerHTML = d
 				document.getElementById("c" + (i + 1)).innerHTML = obj.count
 				document.getElementById("cr" + (i + 1)).innerHTML = obj.cross
@@ -233,7 +257,7 @@
 
 
 			})
-			sort()
+			// sort()
 		}
 
 
@@ -258,7 +282,7 @@
 			return similarity;
 		}
 
-
+/*
 		function sort() {
 			const t = dimentions[0]
 			const riv = tokens[t].riv
@@ -282,21 +306,22 @@
 					tmp_most_1 = delta
 					most1 = k
 				}
-				const y = h * delta / 1
+				const y = 150 * delta / 1
 				p.delta = delta
-				const modified = h - ((y + h) / 2)
+				const modified = 150 - ((y + 150) / 2)
 				p.y = modified
+        // co nsole.log( "Y " + p.y)
 				// p.y = h - y 
 				//
 				if (dimentions[1] !== undefined) {
 					const t2 = dimentions[1]
 					const delta2 = cosine_similarity(tokens[t2].riv, p.riv)
-					const x = w * delta2 / 1
-					// console.log(  delta + "  A: " + riv )
-					// console.log( delta2 + "  B: " + tokens[t2].riv)
-					const modified2 = w - ((x + w) / 2)
+					const x = 150 * delta2 / 1
+					// con sole.log(  delta + "  A: " + riv )
+					// con sole.log( delta2 + "  B: " + tokens[t2].riv)
+					const modified2 = 150 - ((x + 150) / 2)
 					p.x = modified2
-					// console.log( p.x )
+					// con sole.log( p.x )
 					p.delta2 = delta2
 
 
@@ -314,7 +339,7 @@
 				mosts[most2] =products[most2].affinity // `rgba(255, 0, 0, 1)`;
 			}
 		}
-
+*/ 
 
     </script>
 

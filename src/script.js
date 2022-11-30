@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { ObjectSpaceNormalMap } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 // import { CSS2DRenderer, CSS2DObject } from "three-css2drender";
 // import {CSS3DRenderer, CSS3DSprite, CSS3DObject} from 'three-css3d';
@@ -7,9 +8,9 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 const canvas = document.getElementById("target");
 const HEIGHT = window.innerHeight * 0.8;
 const WIDTH = window.innerWidth * 0.8
-const cubes = [] 
-let renderer = undefined; 
-let camera = undefined; 
+const cubes = {}
+let renderer = undefined;
+let camera = undefined;
 let renderRequested = false;
 let scene = undefined;
 function render() {
@@ -42,17 +43,17 @@ function main() {
     renderer.setSize(WIDTH, HEIGHT)
 
     const fov = 75;
-    const aspect = 2;  // the canvas default
+    const aspect = 2;
     const near = 0.1;
     const far = 1000;
     camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-    camera.position.z = 100;
+    camera.position.z = 100; // closer
 
     const axes = new THREE.AxisHelper(50);
     // const controls = new THREE.OrbitControls(camera, canvas);
     const controls = new OrbitControls(camera, renderer.domElement)
 
-    controls.target.set(10,10,0);
+    controls.target.set(10, 10, 0);
     controls.update();
 
     scene = new THREE.Scene();
@@ -60,19 +61,19 @@ function main() {
 
     scene.add(axes);
 
-    const X = makeTextSprite( `X`, { fontsize: 44, textColor: {r:0, g:0, b:0, a:1.0}} );
-	X.position.set(55,0,0);
+    const X = makeTextSprite(`X`, { fontsize: 44, textColor: { r: 0, g: 0, b: 0, a: 1.0 } });
+    X.position.set(55, 0, 0);
     scene.add(X);
-    const Y = makeTextSprite( `Y`, { fontsize: 44, textColor: {r:0, g:0, b:0, a:1.0}} );
-	Y.position.set(0,10,0);
+    const Y = makeTextSprite(`Y`, { fontsize: 44, textColor: { r: 0, g: 0, b: 0, a: 1.0 } });
+    Y.position.set(0, 10, 0);
     scene.add(Y);
-    const Z = makeTextSprite( `Z`, { fontsize: 44, textColor: {r:0, g:0, b:0, a:1.0}} );
-	Z.position.set(0,0,10);
+    const Z = makeTextSprite(`Z`, { fontsize: 44, textColor: { r: 0, g: 0, b: 0, a: 1.0 } });
+    Z.position.set(0, 0, 10);
     scene.add(Z);
 
     function addLight(...pos) {
-        console.log( pos )
-        const color = 0xFFFFFF;
+//        co sole.log(pos)
+        const color = 0xff00ff;
         const intensity = 1;
         const light = new THREE.DirectionalLight(color, intensity);
         light.position.set(...pos);
@@ -81,15 +82,20 @@ function main() {
     addLight(-1, 2, 4);
     addLight(1, -1, -2);
 
+    addLight(-1, -1, -1);
+    addLight(1, 1, 1);
+
+
+
     const boxWidth = 1;
     const boxHeight = 1;
     const boxDepth = 1;
     const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
-    function makeInstance(geometry, color, x, y, z) {
+    function makeInstance(geometry, color, x, y, z, productName) {
         // finch 
-        const clr = "rgba(0,0,0,1)"
+        // const clr = "rgba(0,0,0,1)"
         const material = new THREE.MeshPhongMaterial({
-            clr,
+            color,
             opacity: 0.5,
             transparent: true,
         });
@@ -98,7 +104,7 @@ function main() {
 
         scene.add(cube);
 
-        cubes.push(cube)
+        cubes[productName] = cube
 
 
 
@@ -111,55 +117,29 @@ function main() {
         return (new THREE.Color()).setHSL(h, s, l);
     }
 
-    {
-        // const d = 0.8;
-        // makeInstance(geometry, hsl(0 / 8, 1, .5), -d, -d, -d);
-        // makeInstance(geometry, hsl(1 / 8, 1, .5), d, -d, -d);
-        // makeInstance(geometry, hsl(2 / 8, 1, .5), -d, d, -d);
-        // makeInstance(geometry, hsl(3 / 8, 1, .5), d, d, -d);
-        // makeInstance(geometry, hsl(4 / 8, 1, .5), -d, -d, d);
-        // makeInstance(geometry, hsl(5 / 8, 1, .5), d, -d, d);
-        // makeInstance(geometry, hsl(6 / 8, 1, .5), -d, d, d);
-        // makeInstance(geometry, hsl(7 / 8, 1, .5), d, d, d);
-        // makeInstance(geometry, hsl(7 / 8, 1, .5), 51, 0, 0);
-        // let xx = -75
-        for ( let j = 0; j < 200; j++ ) {
-
-            // const xx = ( Math.random() * 150 ) - 75 
-            // const yy = ( Math.random() * 150 ) - 75 
-            // const zz = ( Math.random() * 150 ) - 75 
-            const xx = 0 
-            const yy = 0
-            const zz = 0 
-            makeInstance(geometry, hsl(7 / 8, 1, .5), xx, yy, zz );
-      }
-    }
 
 
-    // function resizeRendererToDisplaySize(renderer) {
-    //     const canvas = renderer.domElement;
-    //     const width = WIDTH // canvas.clientWidth;
-    //     const height = canvas.clientHeight;
-    //     const needResize = canvas.width !== width || canvas.height !== height;
-    //     if (needResize) {
-    //         renderer.setSize(width, height, false);
-    //     }
-    //     return needResize;
-    // }
+    // for ( let j = 0; j < 200; j++ ) {
+    Object.keys(products).forEach((k) => {
+        products[k].x = 0
+        products[k].y = 0
+        products[k].z = 0
+        const xx = 0
+        const yy = 0
+        const zz = 0
+        let r = Math.random()
+        if (r > 0.9) {
+            // purple
+            makeInstance(geometry, hsl(0.666, 0.66, .6), xx, yy, zz, k);
+        } else {
+            // pink
+            makeInstance(geometry, hsl(2, 2, 1), xx, yy, zz, k);
+        }
+    })
 
-    // let renderRequested = false;
 
-    // function render() {
-    //     renderRequested = undefined;
 
-    //     if (resizeRendererToDisplaySize(renderer)) {
-    //         const canvas = renderer.domElement;
-    //         camera.aspect = canvas.clientWidth / canvas.clientHeight;
-    //         camera.updateProjectionMatrix();
-    //     }
 
-    //     renderer.render(scene, camera);
-    // }
     render();
 
     function requestRenderIfNotRequested() {
@@ -210,14 +190,75 @@ function makeTextSprite(message, parameters) {
 
 main();
 
-function helloworld(param) { 
-//    alert(param)
-    try { 
-    cubes[0].position.set(0, 10, 10);
-        console.log("DO IT!")
+function helloworld(param) {
+    //    alert(param)
+    try {
+
+        // Object.keys(products).forEach((k)=>{
+        //     products[k].x =  ( Math.random() * 150 ) - 75  
+        //     products[k].y =  ( Math.random() * 150 ) - 75  
+        //     products[k].z =  ( Math.random() * 150 ) - 75  
+
+        // })
+
+        // cubes.forEach((cube)=> { 
+        for (let productName in cubes) {
+            // co nsole.log("PRODUCT NAME " + productName)
+            const xx = (Math.random() * 150) - 75
+            const yy = (Math.random() * 150) - 75
+            const zz = (Math.random() * 150) - 75
+            cubes[productName].position.set(xx, yy, zz);
+
+        }
         render()
-} catch ( boom ) { 
-        alert( boom )
+    } catch (boom) {
+        alert(boom)
     }
 }
-self["helloworld"] = helloworld; 
+function sortOn(xyz, widgetId) {
+    const token = document.getElementById(widgetId).innerHTML
+    let riv = []
+    let most = 0
+    let most_product = ""
+
+    if (token === undefined || token.length === 0 || ! tokens.hasOwnProperty(token)) {
+        riv = [0.001, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0
+        ]    
+    } else {
+        riv = tokens[token].riv
+    }
+
+    for (let k in products) {
+        const delta = cosine_similarity(riv, products[k].riv)
+        if (delta > most) {
+            most = delta
+            most_product = k
+        }
+        const value = 150 * delta / 1
+        products[k].delta = delta
+        const modified = value
+        //console.log( modified + "   " + value )
+        if ( xyz === "x") {
+            cubes[k].position.x = modified
+            console.log("X: " + modified + "    " + k )
+        } else if ( xyz === "y" ) {
+            cubes[k].position.y = modified
+            console.log("Y: " + modified + "    " + k )
+        } else if ( xyz === "z" ) {
+            cubes[k].position.z = modified
+            console.log("Z: " + modified + "    " + k )
+        } else {
+            console.log("Something weird.... LINE 250 in script.js")
+        }
+        products[k][xyz] = modified
+
+        // console.log(xyz + "   " + modified)
+
+    }
+    render()
+    console.log( most + " " + most_product)
+}
+    self["sortOn"] = sortOn;
+    self["helloworld"] = helloworld; 
