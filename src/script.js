@@ -132,6 +132,7 @@ let distance = 6000
     table += `<tr><td>text</td><td>${text}</td></tr>`
     /// HOW to get button to reach a function?! 
     table += `<tr><td>btn</td><td><button onClick="alert('${text}')">btn</button></td></tr>`
+    table += `<tr><td>btn</td><td><button onClick="thisIsAFunction('${text}')">how come this does not work</button></td></tr>`
     table += "</table>"
 
 
