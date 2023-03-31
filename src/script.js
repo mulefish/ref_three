@@ -115,9 +115,12 @@ let distance = 6000
   var rendererTrad; 
   
   var objects = []
+
   init()
   animate()
 
+
+/* 
   function addTable ( distance) {
     var bunny = document.createElement('div')
 
@@ -128,10 +131,10 @@ let distance = 6000
     const hue = Math.random()
     const saturation = 1; // Math.random()
     const lightness = Math.random()
-    makeInstance(geometry, hsl(hue, saturation, lightness  ),  300, 300, z - 50 );
+//     makeInstance(geometry, hsl(hue, saturation, lightness  ),  300, 300, z - 50 );
 //    makeInstance(geometry, hsl(0, 0, 1  ),  300, 300, z - 50 );
 
-console.log( hue, saturation, lightness )
+    console.log( hue, saturation, lightness, x, y, z  )
     var t = `<table border='1'>`
     t += `<tr><td>x</td><td>${x}</td></tr>`
     t += `<tr><td>y</td><td>${y}</td></tr>`
@@ -146,11 +149,11 @@ console.log( hue, saturation, lightness )
 
     var o2 = new CSS3DObject(bunny)
     scene.add(o2)
-    scene.background = new THREE.Color('white');
+    // scene.background = new THREE.Color('white');
 
 
-    addLight(-1, 2, 4);
-    addLight( 1, -1, -2);
+    // addLight(-1, 2, 4);
+    // addLight( 1, -1, -2);
 
 
     o2.position.x = 300// 500 + (Math.floor(Math.random() * 1000))
@@ -160,7 +163,7 @@ console.log( hue, saturation, lightness )
 
 
   }
-
+*/
   function addWhen (index) {
     let w = months[index]
     // console.log('addWhen: ' + index + 'w ' + w)
@@ -212,32 +215,54 @@ console.log( hue, saturation, lightness )
     }
 
     // let html = createTable()
-    addTable( months[0].distance)
-    addTable( -10)
+//    addTable( months[0].distance)
+    // addTable( -10)
 
- 
-
-    addTable( 101)
-    addTable( 1001)
+    scene.background = new THREE.Color('tan');
 
 
+    addLight(-1, 2, 4);
+    addLight( 1, -1, -2);
 
-    addTable( months[9].distance)
-    addTable( months[15].distance)
 
-    {
-      const d = 0.8;
-      // makeInstance(geometry, hsl(0 / 8, 1, .5), 300, 300, 2250);
 
-      // makeInstance(geometry, hsl(0 / 8, 1, .5), -d, -d, 400);
-      // makeInstance(geometry, hsl(1 / 8, 1, .5),  d, -d, 400;
-      // makeInstance(geometry, hsl(2 / 8, 1, .5), -d,  d, -d);
-      // makeInstance(geometry, hsl(3 / 8, 1, .5),  d,  d, -d);
-      // makeInstance(geometry, hsl(4 / 8, 1, .5), -d, -d,  d);
-      // makeInstance(geometry, hsl(5 / 8, 1, .5),  d, -d,  d);
-      // makeInstance(geometry, hsl(6 / 8, 1, .5), -d,  d,  d);
-      // makeInstance(geometry, hsl(7 / 8, 1, .5),  d,  d,  d);
-    }
+
+
+    // addTable( 101)
+    // addTable( 1001)
+
+
+
+    // addTable( months[9].distance)
+    // addTable( months[15].distance)
+
+
+    const mymaterial = new THREE.MeshPhongMaterial()
+    // var clr = hsl(hue, saturation, lightness  )
+    // const material = new THREE.MeshPhongMaterial({
+    //   clr ,
+    //   opacity: 0.5,
+    //   transparent: true,
+    // });
+    const sprite1 = new THREE.Sprite(mymaterial);
+    sprite1.position.set(500, 200, 0);
+    scene.add(sprite1);
+  
+
+    const sprite2 = new THREE.Sprite(mymaterial);
+    sprite2.position.set(500, 200, 3000);
+    scene.add(sprite2);
+  
+    const lineMaterial = new THREE.LineBasicMaterial({ color: 0xffffff });
+    const lineGeometry1 = new THREE.BufferGeometry().setFromPoints([
+      sprite1.position,
+      sprite2.position,
+    ]);
+    const line1 = new THREE.Line(lineGeometry1, lineMaterial);
+    scene.add(line1);
+
+
+
     renderer = new CSS3DRenderer()
     rendererTrad = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, height)
@@ -256,9 +281,6 @@ console.log( hue, saturation, lightness )
     controls.addEventListener('change', render)
 
     window.addEventListener('resize', onWindowResize, false)
-
-//    cube()
-
     render()
   }
 
