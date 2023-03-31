@@ -123,53 +123,30 @@ let distance = 6000
   animate()
 
   function addLetter (  position, text) {
-    var bunny = document.createElement('div')
-console.log("Addletter" + JSON.stringify( position ) )
-    // const x = 300
-    // const y = 300
-    // const z = distance 
-
-    const hue = Math.random()
-    const saturation = 1; // Math.random()
-    const lightness = Math.random()
-//     makeInstance(geometry, hsl(hue, saturation, lightness  ),  300, 300, z - 50 );
-//    makeInstance(geometry, hsl(0, 0, 1  ),  300, 300, z - 50 );
-
+    const createdElement = document.createElement('div')
+    
+    let table = `<table border='1'>`
+    table += `<tr><td>x</td><td>${position.x}</td></tr>`
+    table += `<tr><td>y</td><td>${position.y}</td></tr>`
+    table += `<tr><td>z</td><td>${position.z}</td></tr>`
+    table += `<tr><td>text</td><td>${text}</td></tr>`
+    /// HOW to get button to reach a function?! 
+    table += `<tr><td>btn</td><td><button onClick="alert('${text}')">btn</button></td></tr>`
+    table += "</table>"
 
 
-    var t = `<table border='1'>`
-    t += `<tr><td>x</td><td>${position.x}</td></tr>`
-    t += `<tr><td>y</td><td>${position.y}</td></tr>`
-    t += `<tr><td>z</td><td>${position.z}</td></tr>`
-    t += `<tr><td>text</td><td>${text}</td></tr>`
-    t += `<tr><td>btn</td><td><button onClick="alert('${text}')">btn</button></td></tr>`
-    t += "</table>"
-    // t += `<tr><td>btn</td><td><button onClick="()=> { alert("hello}}">${text} erm </button></td></tr>`
-
-
-    var details = document.createElement('div')
+    const details = document.createElement('div')
     details.className = 'details'
 
-    details.innerHTML = t
-    bunny.appendChild(details)
+    details.innerHTML = table
+    createdElement.appendChild(details)
 
-    var o2 = new CSS3DObject(bunny)
-    scene.add(o2)
-    // scene.background = new THREE.Color('white');
+    const theTable = new CSS3DObject(createdElement)
+    scene.add(theTable)
 
-
-    // addLight(-1, 2, 4);
-    // addLight( 1, -1, -2);
-
-    o2.position.x = position.x
-    o2.position.y = position.y
-    o2.position.z = position.z
-    // o2.position.x = 300// 500 + (Math.floor(Math.random() * 1000))
-    // o2.position.y = 300// -500 + (Math.floor(Math.random() * 1000))
-    // o2.position.z = distance// -500 + (Math.floor(Math.random() * 4000))
-    // o2.rotateX = 10.2
-
-
+    theTable.position.x = position.x
+    theTable.position.y = position.y
+    theTable.position.z = position.z
   }
 
 
@@ -272,7 +249,7 @@ console.log("Addletter" + JSON.stringify( position ) )
 //    addTable( months[0].distance)
     // addTable( -10)
 
-    scene.background = new THREE.Color('tan');
+    scene.background = new THREE.Color('lightgrey');
 
 
     addLight(-1, 2, 4);
