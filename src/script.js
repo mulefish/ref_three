@@ -119,6 +119,53 @@ let distance = 6000
   init()
   animate()
 
+  function addLetter (  position, text) {
+    var bunny = document.createElement('div')
+console.log("Addletter" + JSON.stringify( position ) )
+    // const x = 300
+    // const y = 300
+    // const z = distance 
+
+    const hue = Math.random()
+    const saturation = 1; // Math.random()
+    const lightness = Math.random()
+//     makeInstance(geometry, hsl(hue, saturation, lightness  ),  300, 300, z - 50 );
+//    makeInstance(geometry, hsl(0, 0, 1  ),  300, 300, z - 50 );
+
+    console.log( position  )
+    var t = `<table border='1'>`
+    t += `<tr><td>x</td><td>AAA</td></tr>`
+    t += `<tr><td>y</td><td>BBB</td></tr>`
+    t += `<tr><td>z</td><td>CCC</td></tr>`
+    t += `<tr><td>z</td><td>${text}</td></tr>`
+
+
+    var details = document.createElement('div')
+    details.className = 'details'
+
+    details.innerHTML = t
+    bunny.appendChild(details)
+
+    var o2 = new CSS3DObject(bunny)
+    scene.add(o2)
+    // scene.background = new THREE.Color('white');
+
+
+    // addLight(-1, 2, 4);
+    // addLight( 1, -1, -2);
+
+    o2.position.x = position.x
+    o2.position.y = position.y
+    o2.position.z = position.z
+    // o2.position.x = 300// 500 + (Math.floor(Math.random() * 1000))
+    // o2.position.y = 300// -500 + (Math.floor(Math.random() * 1000))
+    // o2.position.z = distance// -500 + (Math.floor(Math.random() * 4000))
+    // o2.rotateX = 10.2
+
+
+  }
+
+
 
 /* 
   function addTable ( distance) {
@@ -244,6 +291,10 @@ let distance = 6000
     //   opacity: 0.5,
     //   transparent: true,
     // });
+
+
+
+    
     const sprite1 = new THREE.Sprite(mymaterial);
     sprite1.position.set(500, 200, 0);
     scene.add(sprite1);
@@ -252,15 +303,17 @@ let distance = 6000
     const sprite2 = new THREE.Sprite(mymaterial);
     sprite2.position.set(500, 200, 3000);
     scene.add(sprite2);
-  
     const lineMaterial = new THREE.LineBasicMaterial({ color: 0xffffff });
     const lineGeometry1 = new THREE.BufferGeometry().setFromPoints([
       sprite1.position,
       sprite2.position,
     ]);
+    addLetter(sprite2.position, "sprite2")
+    console.log("sprite2.position: "  + JSON.stringify( sprite2.position)  ) 
     const line1 = new THREE.Line(lineGeometry1, lineMaterial);
     scene.add(line1);
 
+    addLetter(sprite1.position, "sprite1")
    
 
     renderer = new CSS3DRenderer()
