@@ -261,7 +261,7 @@ let distance = 6000
     const line1 = new THREE.Line(lineGeometry1, lineMaterial);
     scene.add(line1);
 
-
+   
 
     renderer = new CSS3DRenderer()
     rendererTrad = new THREE.WebGLRenderer();
