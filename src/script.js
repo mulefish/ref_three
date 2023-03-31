@@ -19,7 +19,9 @@ let user = "<table class='tbl' border='1'><th colspan='2'><div class='head'>user
 
 // const canvas = document.getElementById("target");
 
-
+// function showText(someText) {
+//   alert(someText )
+// }
 
 
 function addLight(...pos) {
@@ -62,6 +64,7 @@ let distance = 6000
   //   this.display = display
   //   this.distance = distance
   // }
+
 
   class When{ 
     constructor(id, display, distance) {
@@ -132,12 +135,16 @@ console.log("Addletter" + JSON.stringify( position ) )
 //     makeInstance(geometry, hsl(hue, saturation, lightness  ),  300, 300, z - 50 );
 //    makeInstance(geometry, hsl(0, 0, 1  ),  300, 300, z - 50 );
 
-    console.log( position  )
+
+
     var t = `<table border='1'>`
-    t += `<tr><td>x</td><td>AAA</td></tr>`
-    t += `<tr><td>y</td><td>BBB</td></tr>`
-    t += `<tr><td>z</td><td>CCC</td></tr>`
-    t += `<tr><td>z</td><td>${text}</td></tr>`
+    t += `<tr><td>x</td><td>${position.x}</td></tr>`
+    t += `<tr><td>y</td><td>${position.y}</td></tr>`
+    t += `<tr><td>z</td><td>${position.z}</td></tr>`
+    t += `<tr><td>text</td><td>${text}</td></tr>`
+    t += `<tr><td>btn</td><td><button onClick="alert('${text}')">btn</button></td></tr>`
+    t += "</table>"
+    // t += `<tr><td>btn</td><td><button onClick="()=> { alert("hello}}">${text} erm </button></td></tr>`
 
 
     var details = document.createElement('div')
