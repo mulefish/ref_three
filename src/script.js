@@ -3,8 +3,8 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 //import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls'
 
 // import { CSS2DRenderer, CSS2DObject } from "three-css2drender";
+// import {CSS3DRenderer, CSS3DSprite, CSS3DObject} from 'three-css3d';
 import {CSS3DRenderer, CSS3DSprite, CSS3DObject} from 'three-css3d';
-
 let campaign_impact = "<table class='tbl' border='1'><th colspan='2'><div class='head'>campaign_impact</tr><tr><td><div class='c2'>campaign_id</div></td><td><div>int(11)</div></td></tr><tr><td><div class='c3'>click_code</div></td><td><div>int(11)</div></td></tr><tr><td><div class='c8'>member_id</div></td><td><div>int(11)</div></td></tr><tr><td><div class='c3'>mktg_tag</div></td><td><div>varchar(255)</div></td></tr></table>"
 let campaigns = "<table class='tbl' border='1'><th colspan='2'><div class='head'>campaigns</tr><tr><td><div class='c2'>campaign_id</div></td><td><div>int(11)</div></td></tr><tr><td><div class='c1'>campaign_name</div></td><td><div>varchar(255)</div></td></tr><tr><td><div class='c1'>campaign_type</div></td><td><div>varchar(255)</div></td></tr><tr><td><div class='c2'>date</div></td><td><div>datetime</div></td></tr><tr><td><div class='c8'>member_id</div></td><td><div>int(11)</div></td></tr><tr><td><div class='c7'>person_id</div></td><td><div>int(11)</div></td></tr></table>"
 let click_names = "<table class='tbl' border='1'><th colspan='2'><div class='head'>click_names</tr><tr><td><div class='c3'>click_code</div></td><td><div>int(11)</div></td></tr><tr><td><div class='c1'>click_name</div></td><td><div>varchar(255)</div></td></tr><tr><td><div class='c2'>click_str</div></td><td><div>char(1)</div></td></tr><tr><td><div class='c1'>click_type</div></td><td><div>char(1)</div></td></tr><tr><td><div class='c1'>count_it</div></td><td><div>int(11)</div></td></tr><tr><td><div class='c1'>rec_id</div></td><td><div>int(11)</div></td></tr><tr><td><div class='c1'>url</div></td><td><div>varchar(255)</div></td></tr></table>"
@@ -31,7 +31,7 @@ function addLight(...pos) {
   light.position.set(...pos);
   scene.add(light);
 }
-
+``
 
 const boxWidth = 50;
 const boxHeight = 50;
