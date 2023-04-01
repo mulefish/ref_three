@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS + THREEjs</title>
+    <style>
+        .timeline {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 24px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 500;
+	line-height: 26.4px;
+}    
+    
+
+.c1 {
+      background-color: #ffffff;
+    }
+
+    .c2 {
+      background-color: #ff6633;
+    }
+
+    .c3 {
+      background-color: #3366ff;
+    }
+
+    .c4 {
+      background-color: #00aa00;
+    }
+
+    .c5 {
+      background-color: #afaf00;
+    }
+
+    .c6 {
+      background-color: #000000;
+    }
+
+
+      #container {
+
+        height:500px;
+      }
+
+
+      a {
+        color: #ffffff;
+      }
+
+      #info {
+        position: absolute;
+        width: 100%;
+        color: #ffffff;
+        padding: 5px;
+        font-family: Monospace;
+        font-size: 13px;
+        font-weight: bold;
+        text-align: center;
+        z-index: 1;
+      }
+
+      #menu {
+        position: absolute;
+        bottom: 20px;
+        width: 100%;
+        text-align: center;
+      }
+
+      .element {
+        width: auto;
+        height: 160px;
+        box-shadow: 0px 0px 12px rgba(0,255,255,0.5);
+        border: 1px solid rgba(0,0,0,0.25);
+        text-align: left;
+        cursor: default;
+      }
+
+      .element:hover {
+        box-shadow: 0px 0px 12px rgba(0,255,255,0.75);
+        border: 1px solid rgba(127,255,255,0.75);
+      }
+
+        .element .symbol {
+          position: relative;
+          font-size: 60px;
+          font-weight: bold;
+          color: rgba(255,255,255,0.75);
+          text-shadow: 0 0 10px rgba(0,255,255,0.95);
+          padding:0 20px;
+        }
+
+        .element .details {
+          position: absolute;
+          bottom: 15px;
+          left: 0px;
+          right: 0px;
+          font-size: 12px;
+          color: rgba(127,255,255,0.75);
+        }
+    </style>
+</head>
+<body>
+    <script>
+      function thisIsAFunction(msg) {
+        alert("showit helo there! " + msg )
+      }
+    </script>
+    <ul>
+        <li>THis is a busy little tech explore for me</li>
+        <li>Webpack? Check</li>
+        <li>Modern three? Check</li>
+        <li>TODO: Three fiber</li>
+        <li>CSS3dRender + THREE.WebGLRenderer() check</li>
+        <li>logic is ugly and not organizied? Yes - I haven't been focused on 'making a thing' just getting diff stacks to work together</li>
+        <li>TODO: https://threejs.org/examples/#webgl_animation_skinning_additive_blending</li>
+
+    </ul></li>
+    <hr/>
+    <canvas id="target"></canvas>
+    <div id="container"></div>
+    <br/>
+</body>
+</html> 
