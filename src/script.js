@@ -9,13 +9,23 @@ let dentogram_lookup;
 function blue(msg) {
   console.log("%c" + msg, "background:lightblue;")
 }
+function green(msg) {
+  console.log("%c" + msg, "background:lightgreen;")
+}
+function tan(msg) {
+  console.log("%c" + msg, "background:tan;")
+}
+function pink(msg) {
+  console.log("%c" + msg, "background:pink;")
+}
 
 function clickListener(evt) { 
   const id = evt.target.id 
   if ( id === "loadTestData") {
     // Load 10 nodes 
     const t1 = new Date().getTime()
-    fetch('./test.json')
+    // fetch('./test.json')
+    fetch('./simple.json')
     .then(response => response.json())
     .then(data => { 
       blue("1 of 2 test.json loaded")
@@ -30,9 +40,9 @@ function clickListener(evt) {
         animate()  
         document.getElementById("milsec").innerHTML = new Date().getTime() - t1
       })
-      .catch(error => console.error(error));    
+      .catch(error => pink(error));    
     })
-    .catch(error => console.error(error));    
+    .catch(error => pink(error));    
   } else if ( id === "loadRealData") {
     // Load 4361 nodes 
     const t1 = new Date().getTime()
@@ -53,9 +63,9 @@ function clickListener(evt) {
         document.getElementById("milsec").innerHTML = new Date().getTime() - t1
 
       })
-      .catch(error => console.error(error));    
+      .catch(error => pink(error));    
     })
-    .catch(error => console.error(error));    
+    .catch(error => pink(error));    
   } else if (id === "cx+") { 
     camera.position.x += 500
     animate() 
@@ -113,8 +123,13 @@ function xyz() {
 }
 
 
+
+
+
+
 function init() {
  
+
 
 
   camera = new THREE.PerspectiveCamera(40, window.innerWidth / height, 1, 10000)
@@ -125,11 +140,11 @@ function init() {
   addLight(1, -1, -2);
   const mymaterial = new THREE.MeshPhongMaterial()
   const sprite1 = new THREE.Sprite(mymaterial);
-  sprite1.position.set(500, 200, 0);
+  sprite1.position.set(0, 0, 0);
   scene.add(sprite1);
 
   const sprite2 = new THREE.Sprite(mymaterial);
-  sprite2.position.set(500, 200, 3000);
+  sprite2.position.set(500, 200, 1500);
   scene.add(sprite2);
   const lineMaterial = new THREE.LineBasicMaterial({ color: 0xffffff });
   const lineGeometry1 = new THREE.BufferGeometry().setFromPoints([
@@ -137,7 +152,6 @@ function init() {
     sprite2.position,
   ]);
   addLetter(sprite2.position, "A")
-  console.log("sprite2.position: " + JSON.stringify(sprite2.position))
   const line1 = new THREE.Line(lineGeometry1, lineMaterial);
   scene.add(line1);
 
@@ -147,8 +161,6 @@ function init() {
   for ( let k in dentogram_lookup ) {
     
     const v = dentogram_lookup[k]
-    // console.log( v )
-    // things.push()
     const loc = xyz()
     const mysprite = new THREE.Sprite(mymaterial);
     mysprite.position.set(loc.x, loc.y, loc.z);
@@ -170,7 +182,7 @@ function init() {
 
   controls.rotateSpeed = 0.5
   controls.minDistance = 500
-  controls.maxDistance = 6000
+  controls.maxDistance = 2000
   controls.addEventListener('change', render)
 
   window.addEventListener('resize', onWindowResize, false)
@@ -185,7 +197,6 @@ function onWindowResize() {
 }
 
 function animate() {
-  // console.log( JSON.stringify(camera.position))
   document.getElementById("cx").innerHTML = camera.position.x.toFixed(0)
   document.getElementById("cy").innerHTML = camera.position.y.toFixed(0)
   document.getElementById("cz").innerHTML = camera.position.z.toFixed(0)
