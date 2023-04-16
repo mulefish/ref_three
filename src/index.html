@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSS + THREEjs</title>
+    <title>luluspace</title>
     <style>
         .timeline {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -13,7 +13,26 @@
 	font-weight: 500;
 	line-height: 26.4px;
 }    
-    
+
+/* unvisited link */
+a:link {
+    color: #cc6633;
+  }
+  
+  /* visited link */
+  a:visited {
+    color: green;
+  }
+  
+  /* mouse over link */
+  a:hover {
+    color: cyan;
+  }
+  
+  /* selected link */
+  a:active {
+    color: blue;
+  }
 
 .c1 {
       background-color: #ffffff;
@@ -103,24 +122,22 @@
     </style>
 </head>
 <body>
+
     <script>
       function thisIsAFunction(msg) {
         alert("showit helo there! " + msg )
       }
+      function selectedNode(letter) {
+        document.getElementById("selectedNode").innerHTML = letter
+      }
     </script>
-    <ul>
-        <li>THis is a busy little tech explore for me</li>
-        <li>Webpack? Check</li>
-        <li>Modern three? Check</li>
-        <li>TODO: Three fiber</li>
-        <li>CSS3dRender + THREE.WebGLRenderer() check</li>
-        <li>logic is ugly and not organizied? Yes - I haven't been focused on 'making a thing' just getting diff stacks to work together</li>
-        <li>TODO: https://threejs.org/examples/#webgl_animation_skinning_additive_blending</li>
-
-    </ul></li>
-    <hr/>
-    <canvas id="target"></canvas>
     <div id="container"></div>
-    <br/>
+      <hr/>
+      <table border="1">
+        <tr>
+          <td><button id="loadTestData" >Load test data</button></td>
+          <td id='selectedNode'></td>
+        </tr>
+      </table>
 </body>
 </html> 
