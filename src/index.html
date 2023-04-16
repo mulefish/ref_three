@@ -135,8 +135,35 @@ a:link {
       <hr/>
       <table border="1">
         <tr>
-          <td><button id="loadTestData" >Load test data</button></td>
+          <th>Load Test</th>
+          <th>Load Real</th>
+          <th>Init Milsec</th>
+          <th>Selected</th>
+          <th>CX</th>
+          <th>CY</th>
+          <th>CZ</th>
+          <th>+CX</th>
+          <th>+CY</th>
+          <th>+CZ</th>
+          <th>-CX</th>
+          <th>-CY</th>
+          <th>-CZ</th>
+
+        </tr>
+        <tr>
+          <td><button id="loadTestData" >Test load</button></td>
+          <td><button id="loadRealData" >Real load</button></td>
+          <td id='milsec'></td>
           <td id='selectedNode'></td>
+          <td id="cx"></td>
+          <td id="cy"></td>
+          <td id="cz"></td>
+          <td><button id="cx+">+ cx</button></td>
+          <td><button id="cy+">+ cy</button></td>
+          <td><button id="cz+">+ cz</button></td>
+          <td><button id="cx-">- cx</button></td>
+          <td><button id="cy-">- cy</button></td>
+          <td><button id="cz-">- cz</button></td>
         </tr>
       </table>
 </body>
