@@ -4,7 +4,7 @@ import { CSS3DRenderer, CSS3DSprite, CSS3DObject } from 'three-css3d';
 let height = window.innerHeight * 0.6
 var camera, scene, renderer, controls, rendererTrad;
 let dentogram;
-let dentogram_lookup; 
+let dentogram_lookup;
 
 function blue(msg) {
   console.log("%c" + msg, "background:lightblue;")
@@ -19,73 +19,54 @@ function pink(msg) {
   console.log("%c" + msg, "background:pink;")
 }
 
-function clickListener(evt) { 
-  const id = evt.target.id 
-  if ( id === "loadTestData") {
-    // Load 10 nodes 
-    const t1 = new Date().getTime()
-    // fetch('./test.json')
-    fetch('./simple.json')
+function loadData(dataFileName, lookupFileName) {
+  green(dataFileName + "   " + lookupFileName)
+  const t1 = new Date().getTime()
+  fetch('./' + dataFileName)
     .then(response => response.json())
-    .then(data => { 
-      blue("1 of 2 test.json loaded")
-      dentogram = data 
-
-      fetch('./test_lookup.json')
-      .then(response => response.json())
-      .then(data => { 
-        blue("2 of 2 test_lookup.json loaded")
-        dentogram_lookup = data
-        init()
-        animate()  
-        document.getElementById("milsec").innerHTML = new Date().getTime() - t1
-      })
-      .catch(error => pink(error));    
+    .then(data => {
+      blue(`1 of 2 ${dataFileName} loaded`)
+      dentogram = data
+      fetch('./' + lookupFileName)
+        .then(response => response.json())
+        .then(data2 => {
+          blue(`2 of 2 ${lookupFileName} loaded`)
+          dentogram_lookup = data2
+          init()
+          animate()
+          document.getElementById("milsec").innerHTML = new Date().getTime() - t1
+        })
+        .catch(error => pink(error));
     })
-    .catch(error => pink(error));    
-  } else if ( id === "loadRealData") {
-    // Load 4361 nodes 
-    const t1 = new Date().getTime()
+    .catch(error => pink(error));
+}
 
-    fetch('./data_april_13.json')
-    .then(response => response.json())
-    .then(data => { 
-      blue("1 of 2 data_april_13.json loaded")
-      dentogram = data 
-
-      fetch('./data_april_13_lookup.json')
-      .then(response => response.json())
-      .then(data => { 
-        blue("2 of 2 data_april_13_lookup.json loaded")
-        dentogram_lookup = data
-        init()
-        animate()  
-        document.getElementById("milsec").innerHTML = new Date().getTime() - t1
-
-      })
-      .catch(error => pink(error));    
-    })
-    .catch(error => pink(error));    
-  } else if (id === "cx+") { 
+function clickListener(evt) {
+  const id = evt.target.id
+  if (id === "loadTestData") {
+    loadData("test.json", "test_lookup.json")     // // Load 10 nodes 
+  } else if (id === "loadRealData") {
+    loadData("data_april_13.json", "data_april_13_lookup.json")     // Load 4361 nodes 
+  } else if (id === "cx+") {
     camera.position.x += 500
-    animate() 
-  } else if (id === "cy+") { 
+    animate()
+  } else if (id === "cy+") {
     camera.position.y += 500
-    animate() 
-  } else if (id === "cz+") { 
+    animate()
+  } else if (id === "cz+") {
     camera.position.z += 500
-    animate() 
-  } else if (id === "cx-") { 
+    animate()
+  } else if (id === "cx-") {
     camera.position.x -= 500
-    animate() 
-  } else if (id === "cy-") { 
+    animate()
+  } else if (id === "cy-") {
     camera.position.y -= 500
-    animate() 
-  } else if (id === "cz-") { 
+    animate()
+  } else if (id === "cz-") {
     camera.position.z -= 500
-    animate() 
-  } else { 
-    console.log("BOO " + id )
+    animate()
+  } else {
+    console.log("Fall through, with id=" + id)
   }
 }
 window.addEventListener("click", clickListener);
@@ -106,13 +87,13 @@ function addLetter(position, text) {
   const letter = letter_activity[0]
   const activity = letter_activity[1]
   let className = "mint"
-  if ( activity === "on the move") {
+  if (activity === "on the move") {
     className = "grey"
-  } else if ( activity === "yoga") {
+  } else if (activity === "yoga") {
     className = "olive"
-  } else if ( activity === "training") {
+  } else if (activity === "training") {
     className = "lime"
-  } else if ( activity === "running") {
+  } else if (activity === "running") {
     className = "orange"
   }
 
@@ -132,11 +113,11 @@ function addLetter(position, text) {
   theTable.position.z = position.z
 }
 
-function xyz() { 
+function xyz() {
   return {
-    x : (Math.random() * 6000).toFixed(0) - 3000, 
-    y : (Math.random() * 6000).toFixed(0) - 3000,
-    z : 0 // (Math.random() * 3000).toFixed(0) 
+    x: (Math.random() * 6000).toFixed(0) - 3000,
+    y: (Math.random() * 6000).toFixed(0) - 3000,
+    z: 0 // (Math.random() * 3000).toFixed(0) 
   }
 }
 
@@ -146,7 +127,7 @@ function xyz() {
 
 
 function init() {
- 
+
 
 
 
@@ -176,8 +157,8 @@ function init() {
   addLetter(sprite1.position, "B")
 
 
-  for ( let k in dentogram_lookup ) {
-    
+  for (let k in dentogram_lookup) {
+
     const v = dentogram_lookup[k]
     const loc = xyz()
     const mysprite = new THREE.Sprite(mymaterial);
@@ -185,7 +166,7 @@ function init() {
     scene.add(mysprite);
     addLetter(mysprite.position, v)
 
-   }
+  }
 
 
   renderer = new CSS3DRenderer()
