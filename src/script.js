@@ -100,10 +100,28 @@ function addLight(...pos) {
 }
 
 function addLetter(position, text) {
+
+
+  const letter_activity = text.split("_")
+  const letter = letter_activity[0]
+  const activity = letter_activity[1]
+  let className = "mint"
+  if ( activity === "on the move") {
+    className = "grey"
+  } else if ( activity === "yoga") {
+    className = "olive"
+  } else if ( activity === "training") {
+    className = "lime"
+  } else if ( activity === "running") {
+    className = "orange"
+  }
+
+
+
   const createdElement = document.createElement('div')
   const details = document.createElement('div')
   // details.innerHTML = `<a href='javascript:selectedNode("${text}")'>${text} ${position.x} ${position.y} ${position.z}</a>` // table
-  details.innerHTML = `<a href='javascript:selectedNode("${text}")'>${text}</a>` // table
+  details.innerHTML = `<a class='${className}' href='javascript:selectedNode("${text}")'>${letter}</a>` // table
   createdElement.appendChild(details)
 
   const theTable = new CSS3DObject(createdElement)
@@ -135,7 +153,7 @@ function init() {
   camera = new THREE.PerspectiveCamera(40, window.innerWidth / height, 1, 10000)
   camera.position.z = 10000
   scene = new THREE.Scene()
-  scene.background = new THREE.Color('lightgrey');
+  scene.background = new THREE.Color('#f9f9f9');
   addLight(-1, 2, 4);
   addLight(1, -1, -2);
   const mymaterial = new THREE.MeshPhongMaterial()
@@ -182,7 +200,7 @@ function init() {
 
   controls.rotateSpeed = 0.5
   controls.minDistance = 500
-  controls.maxDistance = 2000
+  controls.maxDistance = 6000
   controls.addEventListener('change', render)
 
   window.addEventListener('resize', onWindowResize, false)
