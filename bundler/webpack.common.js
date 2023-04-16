@@ -13,9 +13,12 @@ module.exports = {
     devtool: 'source-map',
     plugins:
     [
+
+
         new CopyWebpackPlugin({
             patterns: [
-                { from: path.resolve(__dirname, '../static') }
+                { from: path.resolve(__dirname, '../static') },
+                { from: path.resolve(__dirname, '../static/test.json'), to: 'test.json' }
             ]
         }),
         new HtmlWebpackPlugin({
@@ -24,6 +27,7 @@ module.exports = {
         }),
         new MiniCSSExtractPlugin()
     ],
+
     module:
     {
         rules:
@@ -53,7 +57,6 @@ module.exports = {
                     'css-loader'
                 ]
             },
-
             // Images
             {
                 test: /\.(jpg|png|gif|svg)$/,

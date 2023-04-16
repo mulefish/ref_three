@@ -7,13 +7,24 @@ var camera, scene, renderer, controls, rendererTrad;
 function clickListener(evt) { 
   const id = evt.target.id 
   if ( id === "loadTestData") {
-    console.log("YAY init" + id)
-    
+    fetch('./test.json')
+    .then(response => response.json())
+    .then(data => { 
+      // console.log(data)
+      let i = 0
+      for ( let k in data ) {
+        const v = data[k] 
+        console.log( ++i + "   " + v + "    " + k )
+      }
+      init()
+      animate()
+  
+
+    })
+    .catch(error => console.error(error));    
 
 
 
-    init()
-    animate()
   } else { 
     console.log("BOO " + id )
   }
