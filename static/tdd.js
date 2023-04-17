@@ -24,18 +24,18 @@ function getChildrensNames(aryOfObj) {
 let junction =  0
 function traverse(node, loop, total) {
     if (node.name) {
-         console.log(junction + " : " + node.name);
+         console.log("NODE: " + junction + " : " + node.name);
     }
     if (node.distance) {
         total += node.distance
-        console.log(node.distance + "  " + loop + "    " + total)
+        // console.log("WREN: " + node.distance + "  " + loop + "    " + total)
     }
     if (node.children) {
         // console.log(node.children[0]['name'] )
         const ary = getChildrensNames( node.children)
         if ( ary.length > 0 ) {
             junction++
-            console.log( junction + " > " + ary)
+            console.log( "JUNCTION: " + junction + " > " + ary)
         }
         node.children.forEach((kid) => {
             loop++
